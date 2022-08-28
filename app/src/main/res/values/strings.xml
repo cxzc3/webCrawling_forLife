@@ -1,0 +1,13 @@
+<resources>
+    <!-- warn !!
+        & with &amp;
+        > with &gt;
+        < with &lt;
+        " with &quot;, &ldquo; or &rdquo;
+        ' with &apos;, &lsquo; or &rsquo;
+        } with &#125;
+    !! warn -->
+    <string name="app_name">infoapp</string>
+    <string name="urlNaverWeather">https://search.naver.com/search.naver?where=nexearch&amp;sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query=%EC%98%A4%EB%8A%98+%EB%82%A0%EC%94%A8</string>
+    <string name="wUrlNaverWeather">https://www.kr-weathernews.com/mv3/html/today.html?region=4111113600</string>
+</resources>
