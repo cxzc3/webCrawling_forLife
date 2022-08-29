@@ -10,4 +10,5 @@
     <string name="app_name">infoapp</string>
     <string name="urlNaverWeather">https://search.naver.com/search.naver?where=nexearch&amp;sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query=%EC%98%A4%EB%8A%98+%EB%82%A0%EC%94%A8</string>
     <string name="wUrlNaverWeather">https://www.kr-weathernews.com/mv3/html/today.html?region=4111113600</string>
+    <string name="btn_refresh">REFRESH</string>
 </resources>
