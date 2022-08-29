@@ -1,25 +1,13 @@
 package com.example.infoapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.example.infoapp.var.Constant;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.example.infoapp.fragment.weather.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName();
@@ -40,11 +28,5 @@ public class MainActivity extends AppCompatActivity {
         wFrag = new WeatherFragment();
         ft.replace(R.id.frag_frame, wFrag).commitAllowingStateLoss();
 
-    }
-
-    public void btnSetting() {
-        btnRefresh.setOnClickListener(view -> {
-
-        });
     }
 }
