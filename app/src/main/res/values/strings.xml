@@ -11,4 +11,11 @@
     <string name="urlNaverWeather">https://search.naver.com/search.naver?where=nexearch&amp;sm=top_hty&amp;fbm=1&amp;ie=utf8&amp;query=%EC%98%A4%EB%8A%98+%EB%82%A0%EC%94%A8</string>
     <string name="wUrlNaverWeather">https://www.kr-weathernews.com/mv3/html/today.html?region=4111113600</string>
     <string name="btn_refresh">REFRESH</string>
+
+    <string name="field_Temp">기온</string>
+    <string name="field_Prec">강수량</string>
+    <string name="field_Humi">습도</string>
+
+    <string name="clock">시</string>
+    <string name="clock0">00시</string>
 </resources>

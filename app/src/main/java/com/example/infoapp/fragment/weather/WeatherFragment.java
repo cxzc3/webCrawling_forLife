@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class WeatherFragment extends Fragment {
     String TAG = WeatherFragment.class.getSimpleName();
     int cIndex = Constant.dCount;
     boolean coin = true;
+    boolean tCoin = true;
     ImageButton btnRefresh;
     TextView tvWeather;
     Handler handler;
@@ -88,12 +90,18 @@ public class WeatherFragment extends Fragment {
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
                         //tvWeather.setText(bundle.getString(Constant.optPrec));    //받아온 데이터 textView에 출력
-                        if(msg.arg1 == 1){
-                            mAdapter.notifyDataSetChanged() ;
-                        }
-                        else {
-                            addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
-                                    bundle.getString(Constant.optTemp), bundle.getString(Constant.optPrec), bundle.getString(Constant.optHumi));
+                        switch (msg.arg1) {
+                            case Constant.statInit:
+                                addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
+                                        getResources().getString(R.string.field_Temp),
+                                        getResources().getString(R.string.field_Prec),
+                                        getResources().getString(R.string.field_Humi));
+                            case Constant.statSet:
+                                addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
+                                        bundle.getString(Constant.optTemp), bundle.getString(Constant.optPrec), bundle.getString(Constant.optHumi));
+                            case Constant.statFin:
+                                mAdapter.notifyDataSetChanged();
+                                break;
                         }
                     });
                 }
@@ -113,11 +121,29 @@ public class WeatherFragment extends Fragment {
     }
 
     public void callWeather() {
+        if (!coin) {
+            if (tCoin) {
+                Toast.makeText(getContext(), "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                tCoin = false;
+            }
+            return;
+        }
+        new Thread(() -> {
+            try {
+                coin = false;
+                Thread.sleep(5000);
+                coin = true;
+                tCoin = true;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
         mList.clear();
         new Thread(() -> {
             try {
                 doc = Jsoup.connect(urlWeather).get();
-
+                msging(Constant.statInit);
                 for (int a = 0; a < cIndex; a++) {
                     bundle = new Bundle();
                     tempLoad(a);
@@ -133,10 +159,10 @@ public class WeatherFragment extends Fragment {
         }).start();
     }
 
-    private void msging(int a){
+    private void msging(int a) {
         Message msg = handler.obtainMessage();
         msg.arg1 = a;
-        if(a != 1)
+        if (a == Constant.statSet)
             msg.setData(bundle);
         handler.handleMessage(msg);
     }
@@ -150,13 +176,26 @@ public class WeatherFragment extends Fragment {
     public void tempLoad(int i) {
         String sTAG = "_tempLoad()";
         Elements temeles = doc.select(Constant.cRouteTemp);
-        Element temele = temeles.get(i);
+        Elements temelesT = doc.select(Constant.cRouteTempTime);
+        Elements temelesW = doc.select(Constant.cRouteTempWeather);
+        Elements temelesD = doc.select(Constant.cRouteTempDegree);
+        Element temeleT = temelesT.get(i);
+        String strTemeleT;
+        if(!temeleT.text().contains(getResources().getString(R.string.clock)))
+            strTemeleT = getResources().getString(R.string.clock0);
+        else
+            strTemeleT = temeleT.text();
+        Element temeleW = temelesW.get(i);
+        Element temeleD = temelesD.get(i);
         boolean isEmpty = temeles.isEmpty(); //빼온 값 null체크
         Log.d(TAG + sTAG, "isNull? : " + isEmpty); //로그캣 출력
         if (!isEmpty) {
-            String tem = temele.text();
+            String tem = strTemeleT + " " + temeleW.text() + " " + temeleD.text();
             Log.d(TAG + sTAG, "TEM is ~~ : " + tem);
             bundle.putString(Constant.optTemp, tem);
+            bundle.putString(Constant.optTempT, strTemeleT);
+            bundle.putString(Constant.optTempW, temeleW.text());
+            bundle.putString(Constant.optTempD, temeleD.text());
         }
     }
 
