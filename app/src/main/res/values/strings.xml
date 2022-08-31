@@ -12,7 +12,9 @@
     <string name="wUrlNaverWeather">https://www.kr-weathernews.com/mv3/html/today.html?region=4111113600</string>
     <string name="btn_refresh">REFRESH</string>
 
-    <string name="field_Temp">기온</string>
+    <string name="field_TempT">시간</string>
+    <string name="field_TempW">날씨</string>
+    <string name="field_TempD">기온</string>
     <string name="field_Prec">강수량</string>
     <string name="field_Humi">습도</string>
 

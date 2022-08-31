@@ -70,9 +70,9 @@ public class WeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         mRecyclerView = view.findViewById(R.id.rv_weater);
         btnRefresh = view.findViewById(R.id.btn_Refresh);
+
         registerHandler();
         btnSetting();
-
 
         mAdapter = new WeatherAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
@@ -93,12 +93,18 @@ public class WeatherFragment extends Fragment {
                         switch (msg.arg1) {
                             case Constant.statInit:
                                 addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
-                                        getResources().getString(R.string.field_Temp),
+                                        getResources().getString(R.string.field_TempT),
+                                        getResources().getString(R.string.field_TempW),
+                                        getResources().getString(R.string.field_TempD),
                                         getResources().getString(R.string.field_Prec),
                                         getResources().getString(R.string.field_Humi));
                             case Constant.statSet:
                                 addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
-                                        bundle.getString(Constant.optTemp), bundle.getString(Constant.optPrec), bundle.getString(Constant.optHumi));
+                                        bundle.getString(Constant.optTempT),
+                                        bundle.getString(Constant.optTempW),
+                                        bundle.getString(Constant.optTempD),
+                                        bundle.getString(Constant.optPrec),
+                                        bundle.getString(Constant.optHumi));
                             case Constant.statFin:
                                 mAdapter.notifyDataSetChanged();
                                 break;
@@ -109,11 +115,23 @@ public class WeatherFragment extends Fragment {
         };
     }
 
-    public void addItem(Drawable icon, String strTemp, String strPrec, String strHumi) {
+    /**
+     * @param icon 미정
+     * @param strTempT 시간
+     * @param strTempW 날씨
+     * @param strTempD 기온
+     * @param strPrec 강수량
+     * @param strHumi 습도
+     */
+    public void addItem(Drawable icon,
+                        String strTempT, String strTempW, String strTempD,
+                        String strPrec, String strHumi) {
         ItemWeather item = new ItemWeather();
 
         item.setIcon(icon);
-        item.setStrTemp(strTemp);
+        item.setStrTempT(strTempT);
+        item.setStrTempW(strTempW);
+        item.setStrTempD(strTempD);
         item.setStrPrec(strPrec);
         item.setStrHumi(strHumi);
 
@@ -181,17 +199,19 @@ public class WeatherFragment extends Fragment {
         Elements temelesD = doc.select(Constant.cRouteTempDegree);
         Element temeleT = temelesT.get(i);
         String strTemeleT;
+
         if(!temeleT.text().contains(getResources().getString(R.string.clock)))
             strTemeleT = getResources().getString(R.string.clock0);
         else
             strTemeleT = temeleT.text();
+
         Element temeleW = temelesW.get(i);
         Element temeleD = temelesD.get(i);
         boolean isEmpty = temeles.isEmpty(); //빼온 값 null체크
         Log.d(TAG + sTAG, "isNull? : " + isEmpty); //로그캣 출력
         if (!isEmpty) {
             String tem = strTemeleT + " " + temeleW.text() + " " + temeleD.text();
-            Log.d(TAG + sTAG, "TEM is ~~ : " + tem);
+            Log.d(TAG + sTAG, "TEM is ~~ : " + strTemeleT + " " + temeleW.text() + " " + temeleD.text());
             bundle.putString(Constant.optTemp, tem);
             bundle.putString(Constant.optTempT, strTemeleT);
             bundle.putString(Constant.optTempW, temeleW.text());

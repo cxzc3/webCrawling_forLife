@@ -43,7 +43,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         ItemWeather item = mData.get(position);
 
         holder.icon.setImageDrawable(item.getIcon());
-        holder.tvTemp.setText(item.getStrTemp());
+        holder.tvTempT.setText(item.getStrTempT());
+        holder.tvTempW.setText(item.getStrTempW());
+        holder.tvTempD.setText(item.getStrTempD());
         holder.tvPrec.setText(item.getStrPrec());
         holder.tvHumi.setText(item.getStrHumi());
     }
@@ -57,7 +59,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView icon;
-        TextView tvTemp;
+        TextView tvTempT;
+        TextView tvTempW;
+        TextView tvTempD;
         TextView tvPrec;
         TextView tvHumi;
 
@@ -66,7 +70,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
             // 뷰 객체에 대한 참조. (hold strong reference)
             icon = itemView.findViewById(R.id.iv_icon);
-            tvTemp = itemView.findViewById(R.id.tv_temp);
+            tvTempT = itemView.findViewById(R.id.tv_tempT);
+            tvTempW = itemView.findViewById(R.id.tv_tempW);
+            tvTempD = itemView.findViewById(R.id.tv_tempD);
             tvPrec = itemView.findViewById(R.id.tv_prec);
             tvHumi = itemView.findViewById(R.id.tv_humi);
         }
