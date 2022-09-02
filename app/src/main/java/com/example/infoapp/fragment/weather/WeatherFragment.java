@@ -98,6 +98,7 @@ public class WeatherFragment extends Fragment {
                                         getResources().getString(R.string.field_TempD),
                                         getResources().getString(R.string.field_Prec),
                                         getResources().getString(R.string.field_Humi));
+                                break;
                             case Constant.statSet:
                                 addItem(getResources().getDrawable(R.drawable.ic_launcher_background),
                                         bundle.getString(Constant.optTempT),
@@ -105,6 +106,7 @@ public class WeatherFragment extends Fragment {
                                         bundle.getString(Constant.optTempD),
                                         bundle.getString(Constant.optPrec),
                                         bundle.getString(Constant.optHumi));
+                                break;
                             case Constant.statFin:
                                 mAdapter.notifyDataSetChanged();
                                 break;
@@ -192,7 +194,7 @@ public class WeatherFragment extends Fragment {
      * @param i index
      */
     public void tempLoad(int i) {
-        String sTAG = "_tempLoad()";
+        String sTAG = new Object() {}.getClass().getEnclosingMethod().getName();
         Elements temeles = doc.select(Constant.cRouteTemp);
         Elements temelesT = doc.select(Constant.cRouteTempTime);
         Elements temelesW = doc.select(Constant.cRouteTempWeather);
@@ -226,7 +228,7 @@ public class WeatherFragment extends Fragment {
      * @param i index
      */
     public void precLoad(int i) {
-        String sTAG = "precLoad()";
+        String sTAG = new Object() {}.getClass().getEnclosingMethod().getName();
         Elements preeles = doc.select(Constant.cRoutePrec);
         Elements prepeles = doc.select(Constant.cRoutePrecProb);
         Element preele = preeles.get(i);
@@ -248,7 +250,7 @@ public class WeatherFragment extends Fragment {
      * @param i index
      */
     public void humidLoad(int i) {
-        String sTAG = "_humidLoad()";
+        String sTAG = new Object() {}.getClass().getEnclosingMethod().getName();
         Elements humeles = doc.select(Constant.cRouteHumi);
         boolean isEmpty = humeles.isEmpty();
         Log.d(TAG + sTAG, "isNull? : " + isEmpty);
